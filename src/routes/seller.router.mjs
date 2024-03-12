@@ -1,4 +1,5 @@
 import express from 'express';
+import { getSellerInfoController } from '../controllers/seller.controller.mjs';
 const seller = express.Router();
 
 /*
@@ -11,15 +12,11 @@ seller information:
 ? /seller/following            get: seller's following list
 */
 
-seller.get('/', (req, res) => {
-  res.send('seller endpoint');
-})
+seller.get('/info', getSellerInfoController);
 
-// seller.get('/info', getSellerInfoController);
 // seller.get('/feedback', getSellerFeedbackController);
 // seller.get('/products', getSellerProductsController);
 // seller.get('/followers', getSellerFollowersController);
 // seller.get('/following', getSellerFollowingController);
-
 
 export default seller;

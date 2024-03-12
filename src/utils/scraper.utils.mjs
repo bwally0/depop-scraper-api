@@ -25,9 +25,7 @@ const loadPageContent = async (url) => {
   const response = await page.goto(url);
 
   if (response.status() !== 200) {
-    throw new Error(
-      `SCRAPER UTIL failed to load page, status: ${response.status()}`
-    );
+    throw new Error('page not found');
   }
 
   const htmlContent = await page.content();
