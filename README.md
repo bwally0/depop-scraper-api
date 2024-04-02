@@ -2,6 +2,12 @@
 Web Scraper API for https://www.depop.com/.
 Allows sellers and developers to retrieve publically available Depop shop information for integration into their personal websites or use in analytical tools.
 
+Warning: Using third-party software to mine or scrape Depop data is against [Depop's Terms of Service](https://depophelp.zendesk.com/hc/en-gb/articles/360001773148-Terms-of-Service), use at your own risk.
+
+> 2. You may not use the Service to:
+> ...
+> Modify, interfere with, intercept, disrupt or hack the Service, mine data, scrape or crawl the Service, including any internal software capabilities used to offer our Service (e.g. an application programming interface), or use any bots or other third party software on the Service.
+
 ## Tools Used
 * [Node.js](https://nodejs.org/): javascript runtime environment
 * [Express](https://www.expresjs.org/): node.js web framework
