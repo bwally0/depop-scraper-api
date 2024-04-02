@@ -29,6 +29,7 @@ const scrapeSellerInfo = async (sellerId) => {
     }
 
     const status = $('div[data-testid="signals__active"]').find('p').text();
+    // TODO Parse to integer
     const followersText = $('p[data-testid="followers__count"]').text();
     const followingText = $('p[data-testid="following__count"]').text();
     const shopName = $('p.styles__ShopNameText-sc-30d6819b-13').text();
@@ -53,4 +54,14 @@ const scrapeSellerInfo = async (sellerId) => {
   }
 };
 
-export { scrapeSellerInfo };
+const scrapeSellerProducts = async (sellerId) => {
+  try {
+    const $ = await loadPageContent(`https://www.depop.com/${sellerId}`);
+
+
+  } catch (error) {
+    throw error;
+  }
+}
+
+export { scrapeSellerInfo, scrapeSellerProducts };

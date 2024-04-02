@@ -1,11 +1,12 @@
 import puppeteer from 'puppeteer';
 import * as cheerio from 'cheerio';
+import HttpError from './http.error.mjs';
 
 let browserInstance;
 
-// TODO ERRORMAXXING
+// TODO errormaxxing
 const launchBrowserInstance = async () => {
-  browserInstance = await puppeteer.launch();
+  browserInstance = await puppeteer.launch({ headless: true });
 };
 
 const getBrowserInstance = async () => {
@@ -25,8 +26,15 @@ const loadPageContent = async (url) => {
   const response = await page.goto(url);
 
   if (response.status() !== 200) {
-    throw new Error('page not found');
+    throw new HttpError('page not found', 404);
   }
+
+  const cookiesButton = await page.$('button[data-testid="cookieBanner__acceptAllButton"]')
+  await cookiesButton.click();
+
+  // await page.evaluate(() => {
+  //   window.scrollTo(0, document.body.scrollHeight); // Scroll to the bottom of the page
+  // });
 
   const htmlContent = await page.content();
   page.close();
@@ -35,5 +43,7 @@ const loadPageContent = async (url) => {
 
   return $;
 };
+
+// scrollPage
 
 export { launchBrowserInstance, getBrowserInstance, loadPageContent };

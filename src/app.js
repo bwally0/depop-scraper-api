@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import sellerRoutes from './routes/seller.router.mjs';
 import productRoutes from './routes/product.router.mjs';
 import { launchBrowserInstance } from './utils/scraper.utils.mjs';
+import { scrapeSellerProducts } from './scrapers/seller.scraper.mjs';
 
 const app = express();
 const port = 3000;

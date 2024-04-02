@@ -1,4 +1,5 @@
 import { getSellerInfoService } from '../services/seller.service.mjs';
+import HttpError from '../utils/http.error.mjs';
 
 const getSellerInfoController = async (req, res) => {
   try {
@@ -12,6 +13,9 @@ const getSellerInfoController = async (req, res) => {
 
     return res.status(200).json(sellerInfo);
   } catch (error) {
+    if (error instanceof HttpError) {
+      return res.status(error.status).json({ message: `${error.message}`});
+    }
 
     return res.status(500).json({ message: `${error}` });
   }
