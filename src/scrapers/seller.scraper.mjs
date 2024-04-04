@@ -57,11 +57,49 @@ const scrapeSellerInfo = async (sellerId) => {
 const scrapeSellerProducts = async (sellerId) => {
   try {
     const $ = await loadPageContent(`https://www.depop.com/${sellerId}`);
+    
+    const productList = [];
+    $('ul[data-testid="product__items"] li').each((index, element) => {
+      const productLink = $(element).find('a[data-testid="product__item"]').attr('href');
 
+      const productIdMatches = productLink.match(/\/products\/(.*)/);
+      const productId = productIdMatches ? productIdMatches[1].replace(/\/$/, '') : null;
 
+      const thumbnailLink = $(element).find('img.sc-htehQK.fmdgqI').attr('src');
+
+      let fullPrice = null;
+      let discountedPrice = null;
+
+      const priceElement = $(element).find('p[aria-label="Price"]');
+      if (priceElement.length) {
+        fullPrice = priceElement.text();
+      }
+      
+      const fullPriceElement = $(element).find('p[aria-label="Full price"]');
+      if (fullPriceElement.length) {
+        fullPrice = fullPriceElement.text();
+      }
+      
+      const discountedPriceElement = $(element).find('p[aria-label="Discounted price"]');
+      if (discountedPriceElement.length) {
+        discountedPrice = discountedPriceElement.text();
+      }
+
+      const product = {
+        productId: productId,
+        productLink: `https://www.depop.com${productLink}`,
+        thumbnailLink: thumbnailLink,
+        fullPrice: fullPrice,
+        discountedPrice: discountedPrice,
+      }
+
+      productList.push(product);
+    })
+
+    return productList;
   } catch (error) {
     throw error;
   }
-}
+};
 
 export { scrapeSellerInfo, scrapeSellerProducts };
