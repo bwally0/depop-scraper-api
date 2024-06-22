@@ -1,4 +1,4 @@
-import { scrapeSellerInfo, scrapeSellerProducts } from '../scrapers/seller.scraper.mjs';
+import { scrapeSellerInfo, scrapeSellerProducts, scrapeSellerFeedback } from '../scrapers/seller.scraper.mjs';
 
 const getSellerInfoService = async (sellerId) => {
   const sellerInfo = await scrapeSellerInfo(sellerId);
@@ -10,4 +10,9 @@ const getSellerProductsService = async (sellerId) => {
   return sellerProducts;
 }
 
-export { getSellerInfoService, getSellerProductsService };
+const getSellerFeedbackService = async (sellerId) => {
+  const sellerFeedback = await scrapeSellerFeedback(sellerId);
+  return sellerFeedback;
+}
+
+export { getSellerInfoService, getSellerProductsService, getSellerFeedbackService };

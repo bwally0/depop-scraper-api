@@ -1,4 +1,4 @@
-import { getSellerInfoService, getSellerProductsService } from '../services/seller.service.mjs';
+import { getSellerInfoService, getSellerProductsService, getSellerFeedbackService} from '../services/seller.service.mjs';
 import HttpError from '../utils/http.error.mjs';
 
 const getSellerInfoController = async (req, res) => {
@@ -41,4 +41,25 @@ const getSellerProductsController = async (req, res) => {
   }
 }
 
-export { getSellerInfoController, getSellerProductsController };
+const getSellerFeedbackController = async (req, res) => {
+  try {
+    const sellerId = req.query.sellerId;
+
+    if (!sellerId) {
+      return res.status(400).json({ message: 'sellerId parameter missing' });
+    }
+
+    const sellerFeedback = await getSellerFeedbackService(sellerId);
+
+    return res.status(200).json(sellerFeedback);
+  
+  } catch (error) {
+    if (error instanceof HttpError) {
+      return res.status(error.status).json({ message: `${error.message}`});
+    }
+
+    return res.status(500).json({ message: `${error}` });
+  }
+}
+
+export { getSellerInfoController, getSellerProductsController, getSellerFeedbackController };

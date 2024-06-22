@@ -1,5 +1,5 @@
 import express from 'express';
-import { getSellerInfoController, getSellerProductsController } from '../controllers/seller.controller.mjs';
+import { getSellerInfoController, getSellerProductsController, getSellerFeedbackController } from '../controllers/seller.controller.mjs';
 const seller = express.Router();
 
 /*
@@ -14,7 +14,7 @@ seller information:
 
 seller.get('/info', getSellerInfoController);
 seller.get('/products', getSellerProductsController);
-// seller.get('/feedback', getSellerFeedbackController);
+seller.get('/feedback', getSellerFeedbackController);
 
 // seller.get('/followers', getSellerFollowersController);
 // seller.get('/following', getSellerFollowingController);

@@ -1,4 +1,4 @@
-import { loadPageContent } from '../utils/scraper.utils.mjs';
+import { loadPageContent, openReviews } from '../utils/scraper.utils.mjs';
 
 const scrapeSellerInfo = async (sellerId) => {
   try {
@@ -102,4 +102,48 @@ const scrapeSellerProducts = async (sellerId) => {
   }
 };
 
-export { scrapeSellerInfo, scrapeSellerProducts };
+const scrapeSellerFeedback = async (sellerId) => {
+  let feedbackArray = [];
+
+  try {
+    const $ = await openReviews(`https://www.depop.com/${sellerId}`); 
+    
+    const divElement = $('div[data-testid="feedback__item"]');
+
+    $(divElement).each((index, element) => {
+
+
+      let reviewText = $(element).find('p.sc-eDnWTT.styles__FeedbackText-sc-31728946-5.kcKICQ.DFAai').text();
+      let date = $(element).find('p.sc-eDnWTT.ePldeT').text();
+      let userHref = $(element).find('.sc-eDnWTT.styles__UserName-sc-31728946-3.fRxqiS.imcoQs').text();
+
+      let starsSVG = $(element).find('.styles__Stars-sc-9964bcfb-0.cPAkcV svg');
+      let stars = 0;
+
+      $(starsSVG).each((index, element) => {
+        let star = $(element).find('title').text();
+        if(star === 'Full Star') {
+          stars++;
+        }
+      });
+
+      const rating = {
+        username: userHref,
+        review: reviewText,
+        starCount: stars,
+        timeSinceReview: date
+        }
+
+      feedbackArray.push(rating);
+      
+
+    });
+
+    return feedbackArray;
+
+  } catch (error) {
+    throw error;
+  }
+};
+
+export { scrapeSellerInfo, scrapeSellerProducts, scrapeSellerFeedback };

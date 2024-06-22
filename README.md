@@ -38,7 +38,7 @@ Currently runs locally on port `3000`.
 | --- | --- | --- | --- |
 | `/seller/info` | GET | sellerId: String | get general info about seller |
 | `/seller/products` | GET | sellerId : String, ~~limit: Integer~~ | get list of recent seller products |
-| ~~`/seller/feedback`~~ | GET | type: String, type: 'sold' or 'purchased' | WIP get recent seller reviews |
+| `/seller/feedback` | GET | sellerId: String | WIP get recent seller reviews |
 
 ### Product Endpoints
 | Endpoints | Method | URL Params | Description |
@@ -83,6 +83,6 @@ Expected Response:
 
 ### Todos
 - [x] get `/seller/products`
-- [ ] get `/seller/feedback`
+- [x] get `/seller/feedback`
 - [ ] get `/product/info`
 - [ ] logging
