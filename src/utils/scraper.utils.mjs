@@ -6,7 +6,7 @@ let browserInstance;
 
 // TODO errormaxxing
 const launchBrowserInstance = async () => {
-  browserInstance = await puppeteer.launch({ headless: true });
+  browserInstance = await puppeteer.launch({ headless: false });
 };
 
 const getBrowserInstance = async () => {
@@ -38,9 +38,9 @@ const loadPageContent = async (url) => {
     //   window.scrollTo(0, document.body.scrollHeight); // Scroll to the bottom of the page
     // });
 
-    await page.waitForSelector('ul[data-testid="product__items"]');
+    await page.waitForSelector('ol[class="styles_productGrid__3vl3U"]');
     const htmlContent = await page.content();
-    page.close();
+    // page.close();
 
     const $ = cheerio.load(htmlContent);
 
@@ -81,17 +81,20 @@ const openReviews = async (url) =>  {
       
     }
 
-    const button = 'button[data-testid="feedback-btn"]'
+    try { const button = 'button[data-testid="feedback-btn"]'
     await page.waitForSelector(button, { timeout: 5000 });
     await page.click(button);
+    } catch (error) {
 
-    await page.waitForSelector('div[data-testid="feedback__item"]');
+    }
+
+    await page.waitForSelector('div[class="styles_container__bdAwq"]');
     
     const htmlContent = await page.content();
 
     const $ = cheerio.load(htmlContent);
 
-    page.close();
+    // page.close();
 
     return $;
 
